@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Create Room{% endblock %}
+{% block content %}
+<br>
+<br>
+    <form method="post" >
+        <h3>The room code will be: {{ room_code }}</h3>
+        <input type="hidden" name="room" value="{{ room_code }}">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Create Room" class="btn btn-primary">
+    </form>
+{% endblock %}

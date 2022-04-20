@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Access Room{% endblock %}
+{% block content %}
+<br>
+<br>
+    <form method="post">
+        <input type="number" name="room" placeholder="Room Code">
+        <input type="password" name="password" placeholder="Password">
+        <select name="type">
+            <option value="host">Orders Sender</option>
+            <option value="receiver">Orders Receiver</option>
+        </select>
+        <input type="submit" value="Access Room" class="btn btn-primary">
+    </form>
+{% endblock %}
