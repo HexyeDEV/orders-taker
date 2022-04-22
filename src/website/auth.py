@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash
 import random
-from .models import Room
+from .models import Room, Order
 from . import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -23,7 +23,8 @@ def login():
             if room_type == "host":
                 return render_template("room_host.html", room_code=room_code)
             elif room_type == "receiver":
-                return render_template("room_receiver.html", room_code=room_code)
+                orders = db.session.query(Order).filter_by(room_id=room_code).all()
+                return render_template("room_receiver.html", room_code=room_code, orders=orders)
 
 @auth.route("/register", methods=["GET", "POST"])
 def register():
@@ -39,7 +40,6 @@ def register():
             db.session.add(Room(code=room_code, password_hash=generate_password_hash(pw)))
             db.session.commit()
             flash("Successfully registered", "success")
-            flash(str(room_code), "warning")
             return render_template("room_host.html", room_code=room_code)
         else:
             flash("Invalid room code or password", "error")

@@ -1,4 +1,5 @@
 from . import db
+from datetime import datetime
 
 class Room(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -11,4 +12,4 @@ class Order(db.Model):
     room_id = db.Column(db.Integer, db.ForeignKey("room.id"))
     name = db.Column(db.String(500))
     notes = db.Column(db.String(500))
-    timestamp = db.Column(db.DateTime)
+    timestamp = db.Column(db.DateTime, default=datetime.now())

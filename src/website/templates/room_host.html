@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Room Host{% endblock %}
 {% block content %}
-
+<br>
+<br>
+    <form action="{{ url_for('views.place') }}" method="post">
+        <h3>Room Code: {{ room_code }}</h3>
+        <input type="hidden" name="room" value="{{ room_code }}">
+        <input type="text" name="order" placeholder="Order Info">
+        <input type="text" name="notes" placeholder="Order Notes (optional)">
+        <input type="submit" value="Submit Order" class="btn btn-primary">
+    </form>
 {% endblock %}

@@ -1,5 +1,24 @@
 {% extends "base.html" %}
 {% block title %}Room Receiver{% endblock %}
 {% block content %}
+    <br>
+    <h1 style="text-align: center;"><strong>Orders </strong>(from oldest to newest)</strong></h1>
+    <br>
+    <button onClick="window.location.reload();" class="btn btn-primary">Check For new Oerders</button>
+    {% for order in orders %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ order.name }}</h5>
+                <p class="card-text">{{ order.notes }}</p>
+                <p class="card-text">{{ order.timestamp }}</p>
+                <form method="post" action="{{ url_for('views.delete') }}">
+                    <input type="hidden" value="{{ order.id }}" name="id">
+                    <input type="hidden" value="{{ order.room_id }}" name="room">
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                </form>
+            </div>
+        </div>
+        <br>
+    {% endfor %}
 
 {% endblock %}
