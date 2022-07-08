@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
 import random
 from .models import Room, Order
 from . import db
@@ -24,7 +24,7 @@ def login():
                 return render_template("room_host.html", room_code=room_code)
             elif room_type == "receiver":
                 orders = db.session.query(Order).filter_by(room_id=room_code).all()
-                return render_template("room_receiver.html", room_code=room_code, orders=orders)
+                return redirect(url_for("views.get_orders", room_code=room_code, pw=pw))
 
 @auth.route("/register", methods=["GET", "POST"])
 def register():

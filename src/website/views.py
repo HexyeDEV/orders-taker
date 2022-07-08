@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, flash, request
+from flask import Blueprint, render_template, flash, request, redirect, url_for
 from . import db
-from .models import Order
+from .models import Order, Room
+from werkzeug.security import check_password_hash
 
 views = Blueprint("views", __name__)
 
@@ -28,8 +29,22 @@ def delete():
     id = request.form.get("id")
     order = Order.query.get(id)
     room_id = request.form.get("room")
+    pw = request.form.get("pw")
     if order and order != "":
         db.session.delete(order)
         db.session.commit()
         flash("Successfully deleted order", "success")
-    return render_template("room_receiver.html", room_code=room_id, orders=Order.query.filter_by(room_id=room_id).all())
+    return redirect(url_for("views.get_orders", room_code=room_id, pw=pw))
+
+@views.route("/get_orders")
+def get_orders():
+    room_code = request.args.get("room_code")
+    pw = request.args.get("pw")
+    if not pw:
+        pw = ""
+    room = db.session.query(Room).filter_by(code=room_code).first()
+    if check_password_hash(room.password_hash, pw):
+        orders = db.session.query(Order).filter_by(room_id=room_code).all()
+        return render_template("room_receiver.html", room_code=room_code, orders=orders)
+    else:
+        return redirect(url_for("auth.login"))

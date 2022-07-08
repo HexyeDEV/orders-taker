@@ -14,6 +14,7 @@
                 <form method="post" action="{{ url_for('views.delete') }}">
                     <input type="hidden" value="{{ order.id }}" name="id">
                     <input type="hidden" value="{{ order.room_id }}" name="room">
+                    <input type="hidden" value="{{ pw }}" name="pw">
                     <input type="submit" value="Delete" class="btn btn-danger">
                 </form>
             </div>

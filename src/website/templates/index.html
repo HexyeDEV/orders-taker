@@ -2,4 +2,9 @@
 {% block title %}Home{% endblock %}
 {% block content %}
     <h1 style="text-align: center;"><strong>Automate</strong> your <strong>Restaurant</strong></h1>
+    <br>
+    <br>
+    Go to <a href="{{ url_for('auth.register') }}">Create Room</a> to create your own room and send orders.
+    <br>
+    Go to <a href="{{ url_for('auth.login') }}">Access Room</a> to log in to your room.
 {% endblock %}
